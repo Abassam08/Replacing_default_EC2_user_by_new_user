@@ -141,23 +141,22 @@ At this point:
 * Cannot be accessed directly — only through the router (per lab requirements)
 * System is secure and ready for the rest of the OPS345 email server setup
 
-  
 ```mermaid
 flowchart TD
-    A[Start: Logged in as ec2-user via Router] --> B[Create user asabra1<br/>sudo adduser asabra1]
-    B --> C[Give root privileges<br/>sudo usermod -aG wheel asabra1]
-    C --> D[Remove password (optional)<br/>sudo passwd -d asabra1]
-    D --> E[Create SSH folder<br/>sudo mkdir /home/asabra1/.ssh]
-    E --> F[Copy authorized_keys<br/>sudo cp /home/ec2-user/.ssh/authorized_keys /home/asabra1/.ssh/]
-    F --> G[Fix permissions<br/>sudo chown -R asabra1:asabra1<br/>chmod 700/600]
-    G --> H[Disable password SSH login<br/>Edit sshd_config]
-    H --> I[Restart SSH<br/>sudo systemctl restart sshd]
-    I --> J[Test SSH via Router<br/>ssh -i key.pem -p 2212 asabra1@routerIP]
-    J --> K[Test sudo<br/>sudo whoami → root]
+    A[Start: Logged in as ec2-user via Router] --> B[Create user asabra1: sudo adduser asabra1]
+    B --> C[Give root privileges: sudo usermod -aG wheel asabra1]
+    C --> D[Remove password: sudo passwd -d asabra1]
+    D --> E[Create SSH folder: sudo mkdir /home/asabra1/.ssh]
+    E --> F[Copy authorized_keys to new user]
+    F --> G[Fix ownership and permissions]
+    G --> H[Disable password login in sshd_config]
+    H --> I[Restart SSH service]
+    I --> J[Test SSH through Router]
+    J --> K[Test sudo access]
     K --> L{Success?}
-    L -->|No| M[Fix SSH or Sudo Issues<br/>Repeat steps]
-    L -->|Yes| N[Delete ec2-user<br/>sudo userdel -r ec2-user]
-    N --> O[Final System: Only asabra1 with SSH key login]
+    L -->|No| M[Fix SSH or sudo issues and repeat]
+    L -->|Yes| N[Delete ec2-user: sudo userdel -r ec2-user]
+    N --> O[Final system: Only asabra1 with SSH key login]
     O --> P[Done]
 ```
 
