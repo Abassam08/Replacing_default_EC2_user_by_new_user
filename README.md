@@ -144,22 +144,23 @@ At this point:
   
 ```mermaid
 flowchart TD
-A[Start: Logged in as ec2-user<br>via Router] --> B[Create user 'asabra1'<br><code>sudo adduser asabra1</code>]
-B --> C[Give root privileges<br><code>sudo usermod -aG wheel asabra1</code>]
-C --> D[Remove password (optional)<br><code>sudo passwd -d asabra1</code>]
-D --> E[Create SSH folder<br><code>sudo mkdir /home/asabra1/.ssh</code>]
-E --> F[Copy authorized_keys<br><code>sudo cp /home/ec2-user/.ssh/authorized_keys /home/asabra1/.ssh/</code>]
-F --> G[Fix permissions<br><code>sudo chown -R asabra1:asabra1 ...</code><br><code>chmod 700/600</code>]
-G --> H[Disable password SSH login<br>Edit sshd_config]
-H --> I[Restart SSH<br><code>sudo systemctl restart sshd</code>]
-I --> J[Test SSH via Router<br><code>ssh -i key.pem -p 2212 asabra1@routerIP</code>]
-J --> K[Test sudo<br><code>sudo whoami → root</code>]
-K --> L{Success?}
-L -->|No| M[Fix SSH or Sudo Issues<br>Repeat steps]
-L -->|Yes| N[Delete ec2-user<br><code>sudo userdel -r ec2-user</code>]
-N --> O[Final System: Only asabra1 with SSH key login]
-O --> P[Done]
+    A[Start: Logged in as ec2-user via Router] --> B[Create user asabra1<br/>sudo adduser asabra1]
+    B --> C[Give root privileges<br/>sudo usermod -aG wheel asabra1]
+    C --> D[Remove password (optional)<br/>sudo passwd -d asabra1]
+    D --> E[Create SSH folder<br/>sudo mkdir /home/asabra1/.ssh]
+    E --> F[Copy authorized_keys<br/>sudo cp /home/ec2-user/.ssh/authorized_keys /home/asabra1/.ssh/]
+    F --> G[Fix permissions<br/>sudo chown -R asabra1:asabra1<br/>chmod 700/600]
+    G --> H[Disable password SSH login<br/>Edit sshd_config]
+    H --> I[Restart SSH<br/>sudo systemctl restart sshd]
+    I --> J[Test SSH via Router<br/>ssh -i key.pem -p 2212 asabra1@routerIP]
+    J --> K[Test sudo<br/>sudo whoami → root]
+    K --> L{Success?}
+    L -->|No| M[Fix SSH or Sudo Issues<br/>Repeat steps]
+    L -->|Yes| N[Delete ec2-user<br/>sudo userdel -r ec2-user]
+    N --> O[Final System: Only asabra1 with SSH key login]
+    O --> P[Done]
 ```
+
 
 
 
